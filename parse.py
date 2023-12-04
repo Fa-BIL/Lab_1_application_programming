@@ -32,4 +32,29 @@ def main(rewiews_limit: int, dir_path: str) -> None:
                 BeautifulSoup(str(soup.find("a", class_="breadcrumbs__link")), "lxml").text
                 + "\n"
             )
+            for comment in soup.find_all("div", class_="response good"):
+                if good_comment_num <= rewiews_limit:
+                    comment = BeautifulSoup(str(comment), "lxml").findChild(
+                        "span", class_="_reachbanner_"
+                    )
+                    with open(
+                        os.path.join(dir_path, "dataset", "good", str(good_comment_num).zfill(4)), "w", encoding="utf-8"
+                    ) as file:
+                        file.write(film_name)
+                        file.write(BeautifulSoup(str(comment), "lxml").text)
+                        good_comment_num += 1
+            for comment in soup.find_all("div", class_="response bad"):
+                if bad_comment_num <= rewiews_limit:
+                    comment = BeautifulSoup(str(comment), "lxml").findChild(
+                        "span", class_="_reachbanner_"
+                    )
+                    with open(os.path.join(dir_path, "dataset", "bad", str(bad_comment_num).zfill(4)), "w", encoding="utf-8") as file:
+                        file.write(film_name)
+                        file.write(BeautifulSoup(str(comment), "lxml").text)
+                        bad_comment_num += 1
+            if soup.find("li", class_ = "arr") == None:
+                break
+            sleep(3)
+    driver.close()
+    driver.quit()
 
