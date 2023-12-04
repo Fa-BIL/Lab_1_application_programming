@@ -38,7 +38,7 @@ def main(rewiews_limit: int, dir_path: str) -> None:
                         "span", class_="_reachbanner_"
                     )
                     with open(
-                        os.path.join(dir_path, "dataset", "good", str(good_comment_num).zfill(4)), "w", encoding="utf-8"
+                        os.path.join(dir_path, "dataset", "good", str(good_comment_num).zfill(4)+".txt"), "w", encoding="utf-8"
                     ) as file:
                         file.write(film_name)
                         file.write(BeautifulSoup(str(comment), "lxml").text)
@@ -48,7 +48,7 @@ def main(rewiews_limit: int, dir_path: str) -> None:
                     comment = BeautifulSoup(str(comment), "lxml").findChild(
                         "span", class_="_reachbanner_"
                     )
-                    with open(os.path.join(dir_path, "dataset", "bad", str(bad_comment_num).zfill(4)), "w", encoding="utf-8") as file:
+                    with open(os.path.join(dir_path, "dataset", "bad", str(bad_comment_num).zfill(4)+".txt"), "w", encoding="utf-8") as file:
                         file.write(film_name)
                         file.write(BeautifulSoup(str(comment), "lxml").text)
                         bad_comment_num += 1
